@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import urllib2
 from BeautifulSoup import *
 from urlparse import urljoin
@@ -18,8 +20,8 @@ class crawler:
   def dbcommit(self):
     self.con.commit()
 	
-  # Función auxiliar para obtener un ID de entrada y adiciona
-  # este si no está presente
+  # Funcion auxiliar para obtener un ID de entrada y adiciona
+  # este si no estÃ¡ presente
   def getentryid(self,table,field,value,createnew=True):
     cur=self.con.execute(
     "select rowid from %s where %s='%s'" % (table,field,value))
@@ -31,7 +33,7 @@ class crawler:
     else:
       return res[0]
 	
-  # Indexa una página individual
+  # Indexa una pagina individual
   def addtoindex(self,url,soup):
     if self.isindexed(url): return
     print 'Indexing '+url
@@ -80,7 +82,7 @@ class crawler:
   # Agrega un link entre dos paginas
   def addlinkref(self,urlFrom,urlTo,linkText):
     pass
-  # Iniciando con una lista de páginas, hace una busqueda
+  # Iniciando con una lista de pÃ¡ginas, hace una busqueda
   # primero en anchura hasta la profundidad dada
   # indexando las paginas que lleguen
   def crawl(self,pages,depth=2):
@@ -110,7 +112,6 @@ class crawler:
           print "Could not open %s" % page
           continue
         cad=c.read()
-        print(cad[:30])
         soup=BeautifulSoup(cad)
         self.addtoindex(page,soup)
         links=soup('a')

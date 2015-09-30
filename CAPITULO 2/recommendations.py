@@ -73,17 +73,13 @@ def sim_distance(prefs,person1,person2):
     if sum_of_squares == 0: return 1
     return 1.0/(sqrt(sum_of_squares))
 
+#devuelve el coeficiente de similitud de Tanimoto
 def sim_tanimoto(prefs, person1, person2):
-    # Obtiene la lista de los items similares
-    si={}
-    for item in prefs[person1]:
-        if item in prefs[person2]:
-           si[item]=1
-    # si no tienen cosas en comun retorna 0
-    if len(si)==0: return 0
-    tani = float(len(si))/(len(prefs[person1])+len(prefs[person2])-len(si))
-    if tani == 0: return 1
-    return tani
+    pass
+
+#devuelve el coeficiente de similitud de Manhattan
+def sim_manhattan(prefs, person1, person2):
+    pass
 
 # Devuelve el coeficiente de correlacion de Pearson
 def sim_pearson(prefs,p1,p2):
@@ -141,12 +137,10 @@ def topMatches(prefs,person,n=5,similarity=sim_pearson):
 
 # Obteniendo recomendaciones para una persona usando un promedio 
 # con pesos de cada un de los rankings de los usuarios
-def getRecommendations(prefs,person,n=5,similarity=sim_pearson):
+def getRecommendations(prefs,person,similarity=sim_pearson):
     totals={}
     simSums={}
-    mejores = [item[1]
-               for item in topMatches(prefs,person,n,similarity)]
-    for other in mejores:
+    for other in prefs:
         # evita que me compare a mi mismo
         if other==person: continue
         sim=similarity(prefs,person,other)

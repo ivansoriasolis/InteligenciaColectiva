@@ -160,6 +160,7 @@ class searcher:
           tablenumber+=1
 	# Crear la consulta a partir de las partes separadas
     fullquery='select %s from %s where %s' % (fieldlist,tablelist,clauselist)
+    print fullquery
     try:
       cur=self.con.execute(fullquery)
       rows=[row for row in cur]

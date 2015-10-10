@@ -71,7 +71,7 @@ def sim_distance(prefs,person1,person2):
                         for item in prefs[person1]
                         if item in prefs[person2]])
     if sum_of_squares == 0: return 1
-    return 1.0/(sqrt(sum_of_squares))
+    return 1.0/(1+sqrt(sum_of_squares))
 
 #devuelve el coeficiente de similitud de Tanimoto
 def sim_tanimoto(prefs, person1, person2):

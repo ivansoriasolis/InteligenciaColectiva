@@ -3,6 +3,7 @@
 import urllib2
 from bs4 import *
 from urlparse import urljoin
+import re
 
 import sqlite3 as sqlite
 
@@ -112,7 +113,7 @@ class crawler:
           print "Could not open %s" % page
           continue
         cad=c.read()
-        soup=BeautifulSoup(cad)
+        soup=BeautifulSoup(cad,'html.parser')
         self.addtoindex(page,soup)
         links=soup('a')
         for link in links:

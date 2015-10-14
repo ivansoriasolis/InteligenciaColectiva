@@ -163,6 +163,9 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
     rankings.reverse( )
     return rankings
 
+def getRecommendationsEfic(prefs,person,similarity=sim_pearson, n = 5):
+    pass
+
 # Invierte el diccionario de forma que los items tendrán ahora una
 # lista de criticos
 def transformPrefs(prefs):

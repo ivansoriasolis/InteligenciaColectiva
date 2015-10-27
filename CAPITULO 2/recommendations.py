@@ -221,10 +221,12 @@ def getRecommendedItems(prefs,itemMatch,user):
 def loadMovieLens(path='./data/movielens'):
     # Obteniendo los titulos de las peliculas
     movies={}
+    print('1')
     for line in open(path+'/u.item'):
         (id,title)=line.split('|')[0:2]
         movies[id]=title
     # cargando los datos
+    print('2')
     prefs={}
     for line in open(path+'/u.data'):
         (user,movieid,rating,ts)=line.split('\t')

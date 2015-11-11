@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://platzi.com/blog/expresiones-regulares-python/ -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="fb:app_id" content="263680607075199">
+
+		
+    <link rel="shortcut icon" href="https://platzi.com/blog/wp-content/themes/platzi-blog/assets/images/platzi_favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/css">
+    <link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/css(1)">
+    <link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/css(2)">
+	<link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/normalize.css">
+	<link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/style.css">
+	
+	
+<!-- This site is optimized with the Yoast SEO plugin v2.3.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<title>Guía de expresiones regulares en Python</title>
+<link rel="canonical" href="./Guía de expresiones regulares en Python_files/Guía de expresiones regulares en Python.html">
+<link rel="publisher" href="https://plus.google.com/+Mejorandola/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guía de expresiones regulares en Python">
+<meta property="og:description" content="Cuando manejamos texto en Python, una de las operaciones más comunes es la búsqueda de una subcadena; ya sea para obtener su posición en el texto o simplemente para comprobar si está presente. Si la cadena que buscamos es fija, los métodos como find(), index() o similares nos ayudarán. Pero si buscamos una subcadena con …">
+<meta property="og:url" content="https://platzi.com/blog/expresiones-regulares-python/">
+<meta property="og:site_name" content="Platzi Blog">
+<meta property="article:publisher" content="https://www.facebook.com/platzi">
+<meta property="article:section" content="Platzi">
+<meta property="article:published_time" content="2015-07-17T17:34:30+00:00">
+<meta property="article:modified_time" content="2015-07-19T23:52:54+00:00">
+<meta property="og:updated_time" content="2015-07-19T23:52:54+00:00">
+<meta property="fb:app_id" content="263680607075199">
+<meta property="og:image" content="https://platzi.com/blog/wp-content/uploads/2015/07/regex-python-fb.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Cuando manejamos texto en Python, una de las operaciones más comunes es la búsqueda de una subcadena; ya sea para obtener su posición en el texto o simplemente para comprobar si está presente. Si la cadena que buscamos es fija, los métodos como find(), index() o similares nos ayudarán. Pero si buscamos una subcadena con […]">
+<meta name="twitter:title" content="Guía de expresiones regulares en Python">
+<meta name="twitter:site" content="@platzi">
+<meta name="twitter:domain" content="Platzi Blog">
+<meta name="twitter:image" content="https://platzi.com/blog/wp-content/uploads/2015/07/regex-python-tw.jpg">
+<meta name="twitter:creator" content="@platzi">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Platzi Blog » Guía de expresiones regulares en Python RSS de los comentarios" href="https://platzi.com/blog/expresiones-regulares-python/feed/">
+<script async="" src="./Guía de expresiones regulares en Python_files/fbds.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-KSZ9RW"></script><script src="./Guía de expresiones regulares en Python_files/cb=gapi.loaded_1" async=""></script><script src="./Guía de expresiones regulares en Python_files/cb=gapi.loaded_0" async=""></script><script id="twitter-wjs" src="./Guía de expresiones regulares en Python_files/widgets.js"></script><script id="facebook-jssdk" src="./Guía de expresiones regulares en Python_files/sdk.js"></script><script async="" src="./Guía de expresiones regulares en Python_files/analytics.js"></script><script type="text/javascript" src="./Guía de expresiones regulares en Python_files/jquery.js"></script>
+<script type="text/javascript" src="./Guía de expresiones regulares en Python_files/jquery-migrate.min.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://platzi.com/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://platzi.com/blog/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.3.1">
+<link rel="shortlink" href="https://platzi.com/blog/?p=2102">
+<link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Guía de expresiones regulares en Python_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-76863-18', 'auto');
+	  ga('send', 'pageview');
+	</script>
+	
+	<script src="./Guía de expresiones regulares en Python_files/oct.js" type="text/javascript"></script>
+	
+	<script src="./Guía de expresiones regulares en Python_files/saved_resource" data-sumo-site-id="054a70d70e2d9855a5fd666aa5ac534e1cc8a0a97c234869c201399867b3e416" async="async"></script>
+	
+<script src="./Guía de expresiones regulares en Python_files/secureAnonymousFramework"></script><script type="text/javascript" charset="utf-8" async="" src="./Guía de expresiones regulares en Python_files/button.6619238bf476cc3999511336bc046bfa.js"></script></head>
+<body class="post-template">
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="Facebook Cross Domain Communication Frame" aria-hidden="true" tabindex="-1" id="fb_xdm_frame_https" src="./Guía de expresiones regulares en Python_files/wjDNIDNrTQG.html" style="border: none;"></iframe></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.3";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+	<header class="header" itemtype="http://schema.org/WPHeader" itemscope="itemscope" role="banner">
+		<div class="wrap">
+			<a class="header-logo" href="https://platzi.com/"><img src="./Guía de expresiones regulares en Python_files/platzi-logo.png" alt="Platzi Blog"></a>
+			<label class="header-mobileMenu icon-menu" for="MainMenu-callback"></label>
+			<label for="Login-callback" class="header-login btn-red">Inicia sesión</label>
+			<nav itemtype="http://schema.org/SiteNavigationElement" itemscope="itemscope" role="navigation" class="nav-primary">
+				<ul class="primary-menu">
+					<li><a href="https://platzi.com/cursos/">Cursos</a></li>
+					<li class="active"><a href="https://platzi.com/blog/">Blog</a></li>
+					<li><a href="https://platzi.com/faq/">FAQ</a></li>
+					<li><a href="https://platzi.com/horarios/">Horarios</a></li>
+					<li><a href="https://platzi.com/live/">Live</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="login">
+		<div class="wrap login-content">
+			<a class="btn-twitter btn--big icon-twitter" href="https://mejorando.la/login/twitter/">Conéctate con Twitter</a><a class="btn-facebook btn--big icon-facebook" href="https://mejorando.la/login/facebook/">Conéctate con Facebook</a><div class="login-copy">¿No tienes cursos? <a href="https://mejorando.la/cursos/">Regístrate</a></div>
+		</div>
+	</div>
+	<nav itemtype="http://schema.org/SiteNavigationElement" itemscope="itemscope" role="navigation" class="nav-secondary">
+		<div class="wrap">
+						<form role="search" method="get" class="search-form" action="https://platzi.com/blog/">
+	<label>
+		<input type="search" class="search-field" placeholder="Buscar …" value="" name="s" title="Buscar:">
+	</label><input type="submit" class="search-submit" value="Buscar">
+</form>		</div>
+	</nav>
+
+	<main class="content" role="main" itemtype="http://schema.org/Blog" itemscope="itemscope" itemprop="mainContentOfPage">	
+			
+	    <article class="post" itemprop="blogPost" itemtype="http://schema.org/BlogPosting" itemscope="itemscope">
+						
+			<header class="post-header">
+				<figure class="post-image"><img width="1200" height="800" src="./Guía de expresiones regulares en Python_files/regex-python.jpg" class="attachment-full wp-post-image" alt="Expresiones Regulares en Python"></figure>
+				<div class="wrap">
+				      <h1 class="post-title">Guía de expresiones regulares en Python</h1>
+				 </div> 
+			</header>
+		    <div class="wrap">
+	
+				<div class="social-top">
+
+	<div class="fb-share-button" data-href="https://platzi.com/blog/expresiones-regulares-python/" data-layout="box_count"></div>
+	
+	<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Guía de expresiones regulares en Python_files/tweet_button.3beb63f1e7d4b547a42d79c021627bc3.es.html" style="position: static; visibility: visible; width: 67px; height: 61px;"></iframe>
+	<script>
+	window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
+	</script>
+	
+	<script src="./Guía de expresiones regulares en Python_files/platform.js" async="" defer="" gapi_processed="true">
+		{lang: 'es'}
+	</script>
+	<div id="___plusone_0" style="position: absolute; width: 450px; left: -10000px;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position:absolute;top:-10000px;width:450px;margin:0px;border-style:none" tabindex="0" vspace="0" width="100%" id="I0_1447125568225" name="I0_1447125568225" src="./Guía de expresiones regulares en Python_files/fastbutton(1).html" data-gapiattached="true"></iframe></div><div class="g-plusone" data-size="tall" data-gapiscan="true" data-onload="true" data-gapistub="true"></div>
+	
+	<script src="./Guía de expresiones regulares en Python_files/in.js" type="text/javascript">
+	  lang: es_ES
+	</script>
+	<script type="IN/Share" data-counter="top"></script>
+
+</div>	
+				<div class="post-meta" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+			       <figure class="author-picture-container"><img src="./Guía de expresiones regulares en Python_files/Alvaro Martinez-68.jpg" class="avatar photo" alt="Alvaro Martinez" width="40" height="40"></figure>
+			       <strong temprop="name" name="author-name">Alvaro Martinez</strong>
+			       <time itemprop="datePublished" class="post-date" datetime="{{date format=&#39;DD-MM-YYYY&#39; lang=&#39;es&#39; }}">julio 17 2015</time>
+			    </div>
+	
+				<div class="social-top-mobile">
+
+	<div class="fb-share-button" data-href="https://platzi.com/blog/expresiones-regulares-python/" data-layout="button_count"></div>
+	
+	<iframe id="twitter-widget-1" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Guía de expresiones regulares en Python_files/tweet_button.3beb63f1e7d4b547a42d79c021627bc3.es(1).html" style="position: static; visibility: visible; width: 98px; height: 20px;"></iframe>
+	<script type="text/javascript">
+	window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
+	</script>
+	
+	<script src="./Guía de expresiones regulares en Python_files/platform.js" async="" defer="" gapi_processed="true">
+	  {lang: 'es'}
+	</script>
+	<div id="___plusone_1" style="text-indent: 0px; margin: 0px; padding: 0px; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px; background: transparent;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I1_1447125568229" name="I1_1447125568229" src="./Guía de expresiones regulares en Python_files/fastbutton.html" data-gapiattached="true" title="+1"></iframe></div>
+	
+	<script src="./Guía de expresiones regulares en Python_files/in.js" type="text/javascript">
+	  lang: es_ES
+	</script>
+	<script type="IN/Share" data-counter="right"></script>
+
+</div> 
+	
+			     <section class="post-content">
+				 	<p>Cuando manejamos texto en Python, una de las operaciones más comunes es la búsqueda de una subcadena; ya sea para obtener su posición en el texto o simplemente para comprobar si está presente. Si la cadena que buscamos es fija, los métodos como<em> find()</em>, <em>index()</em> o similares nos ayudarán. Pero <strong>si buscamos una subcadena con cierta forma</strong>, este proceso se vuelve más complejo.</p>
+<p>Al buscar direcciones de correo electrónico, números de teléfono, validar campos de entrada, o <em>una letra mayúscula seguida de dos minúsculas y de 5 dígitos entre 1 y 3</em>; es necesario recurrir a las <strong>Expresiones Regulares</strong>, también conocidas como <strong>Patrones</strong>.</p>
+<h2>Patrones</h2>
+<p>Las expresiones regulares son un <strong>potente lenguaje de descripción de texto</strong>. Y no existe un lenguaje moderno que no permita usarlas. Las reglas con las que se forman son bastante simples. Pero aprender a combinarlas correctamente requiere de práctica.</p>
+<p>Utilizándolas podemos <strong>buscar una subcadena al principio o al final del texto</strong>. Incluso si queremos que se repita cierta cantidad de veces, si queremos que algo NO aparezca, o si debe aparecer una subcadena entre varias posibilidades. Permite, además, capturar aquellos trozos del texto que coincidan con la expresión para guardarlos en una variable o reemplazarlos por una cadena predeterminada; o incluso una cadena formada por los mismos trozos capturados.</p>
+<p>Estos son algunos aspectos básicos de las expresiones regulares:</p>
+<h3>Metacaracteres</h3>
+<p>Se conoce como metacaracteres a aquellos que, dependiendo del contexto, tienen un <strong>significado especial</strong> para las expresiones regulares. Por lo tanto, los debemos escapar colocándoles una contrabarra (\) delante para buscarlos explícitamente. A continuación listaré los más importantes:</p>
+<ul>
+<li><strong>Anclas</strong>: Indican que lo que queremos encontrar se encuentra al principio o al final de la cadena. Combinándolas, podemos buscar algo que represente a la cadena entera:
+<ul>
+<li><strong><code>patron</code></strong>: coincide con cualquier cadena que comience con <strong><em>patron</em>.</strong></li>
+<li><strong><code>patron$</code></strong>: coincide con cualquier cadena que termine con&nbsp;<em>patron</em>.</li>
+<li><strong><code>patron$</code>:</strong> coincide con la cadena exacta <em>patron</em>.</li>
+</ul>
+</li>
+<li><strong>Clases de caracteres</strong>: Se utilizan cuando se quiere buscar un caracter dentro de varias posibles opciones. Una clase se delimita entre corchetes y lista posibles opciones para el caracter que representa:
+<ul>
+<li><code>[abc]</code>: coincide con <em>a</em>, <em>b</em>, o <em>c</em></li>
+<li>[387ab]: coincide con <em>3</em>, <em>8</em>, <em>a</em> o <em>b</em></li>
+<li><code>niñ[oa]s</code>: coincide con <em>niños</em> o <em>niñas</em>.</li>
+<li>Para evitar errores, en caso de que queramos crear una clase de caracteres que contenga un corchete, debemos escribir una barra \ delante, para que el motor de expresiones regulares lo considere un caracter normal: la clase <code>[ab\[]</code> coincide con <em>a</em>, <em>b</em> y <em>[</em>.</li>
+</ul>
+</li>
+</ul>
+<h3>Rangos</h3>
+<p>Si queremos encontrar un número, podemos usar una clase como <code>[0123456789]</code>, o podemos utilizar un <strong>rango</strong>. Un rango es una <strong>clase de caracteres abreviada</strong> que se crea escribiendo el primer caracter del rango, un guión y el último caracter del rango. Múltiples rangos pueden definirse en la misma clase de caracteres.</p>
+<ul>
+<li><code>[a-c]</code>: equivale a <code>[abc]</code></li>
+<li><code>[0-9]</code>: equivale a <code>[0123456789]</code></li>
+<li><code>[a-d5-8]</code>: equivale a <code>[abcd5678]</code></li>
+</ul>
+<p>Es importante notar que <strong>si se quiere buscar un guión debe colocarse al principio o al final de la clase</strong>. Es decir, inmediatamente después del corchete izquierdo o inmediatamente antes del corchete derecho; o, en su defecto, escaparse. Si no se hace de esta forma, el motor de expresiones regulares intentará crear un rango y la expresión no funcionará como debe (o dará un error).</p>
+<p>Si queremos, por ejemplo, crear una clase que coincida con los caracteres a, 4 y -, debemos escribirla así:</p>
+<ul>
+<li><code>[a4-]</code></li>
+<li><code>[-a4]</code></li>
+<li><code>[a\-4]</code></li>
+</ul>
+<h4>Rango negado</h4>
+<p>Así como podemos listar los caracteres posibles en cierta posición de la cadena, <strong>también podemos listar caracteres que no deben aparecer</strong>. Para lograrlo, debemos <strong>negar</strong> la clase, colocando un circunflejo inmediatamente después del corchete izquierdo:</p>
+<ul>
+<li><code>[^abc]</code>: coincide con cualquier caracter distinto a <em>a</em>, <em>b</em> y <em>c</em></li>
+</ul>
+<h4>Clases predefinidas</h4>
+<p>Existen&nbsp;algunas clases que se usan frecuentemente y por eso existen <strong>formas abreviadas</strong> para ellas. En Python, así como en otros lenguajes, se soportan las clases predefinidas de Perl y de POSIX.&nbsp;Algunos ejemplos son:</p>
+<ul>
+<li><code>\d</code> (POSIX <code>[[:digit:]]</code>): equivale a <code>[0-9]</code></li>
+<li><code>\s</code> (POSIX <code>[[:space:]]</code>): caracteres de espacio en blanco (espacio, tabulador, nueva línea, etc)</li>
+<li><code>\w</code> (POSIX <code>[[:word:]]</code>): letras minúsculas, mayúsculas, números y guión bajo&nbsp;(_)</li>
+</ul>
+<p>Además existe una clase de caracteres que coincide con cualquier otro caracter. Ya sea letra, número, o un caracter especial. Esta clase es el <strong>punto</strong>:</p>
+<ul>
+<li><code>"."</code> : coincide con cualquier caracter.</li>
+</ul>
+<h3>Cuantificadores</h3>
+<p>Son caracteres que multiplican el patrón que les precede. Mientras que con las clases de caracteres podemos buscar un dígito, o una letra; con los cuantificadores <strong>podemos buscar cero o más letras, al menos 7 dígitos, o entre tres y cinco letras mayúsculas</strong>.</p>
+<p>Los cuantificadores son:</p>
+<ul>
+<li><code><strong>?</strong></code>: coincide con cero o una ocurrencia del patrón. Dicho de otra forma, hace que el patrón sea opcional</li>
+<li><code><strong>+</strong></code>: coincide con una o más ocurrencias del patrón</li>
+<li><code><strong>*</strong></code>: coincide con cero o más ocurrencias del patrón.</li>
+<li><code><strong>{x}</strong></code>: coincide con exactamente <em>x</em> ocurrencias del patrón</li>
+<li><code><strong>{x, y}</strong></code>: coincide con al menos <em>x</em> y no más de <em>y</em> ocurrencias. Si se omite <em>x</em>, el mínimo es cero, y si se omite <em>y</em>, no hay máximo. Esto permite especificar a los otros como casos particulares: <em>?</em> es <em>{0,1}</em>, <em>+</em> es <em>{1,}</em> y <em>*</em> es <em>{,}</em> o <em>{0,}</em>.</li>
+</ul>
+<p>Ejemplos:</p>
+<ul>
+<li><code>.*</code> : cualquier cadena, de cualquier largo (incluyendo una cadena vacía)</li>
+<li><code>[a-z]{3,6}</code>: entre <em>3</em> y <em>6</em> letras minúsculas</li>
+<li><code>\d{4,}</code>: al menos 4 dígitos</li>
+<li><code>.*hola!?</code>: una cadena cualquiera, seguida de <em>hola</em>, y terminando (o no) con un <em>!</em></li>
+</ul>
+<h3>Otros metacaracteres</h3>
+<p>Existen otros metacaracteres en el lenguaje de las expresiones regulares:</p>
+<ul>
+<li><code><strong>?</strong></code>: Además de servir como cuantificador, <strong>puede modificar el comportamiento de otro</strong>. De forma predeterminada, un cuantificador coincide con la <em>mayor</em> cadena posible. Cuando se le coloca un <em>?</em>, se indica que se debe coincidir con la <em>menor</em> cadena posible. Esto es: dada la cadena <em>bbbbb</em>, <code>b+</code> coincide con la cadena entera, mientras que <code>b+?</code> coincide solamente con <em>b. </em>Es decir,&nbsp;la menor cadena que cumple el patrón.</li>
+<li><code><strong>()</strong></code>: agrupan patrones. Sirven para que aquel pedazo de la cadena que coincida con el patrón <strong>sea capturado</strong>; o para delimitar el alcance de un cuantificador. Ejemplo: <code>ab+</code> coincide con <em>ab</em>, <em>abb</em>, <em>abbbbb</em>, …, mientras que <code>(ab)+</code> coincide con <em>ab</em>, <em>abab</em>, <em>abab…</em></li>
+<li><code><strong>|</strong></code> : permite definir opciones para el patrón: <code>perro|gato</code> coincide con <em>perro</em> y con <em>gato</em>.</li>
+</ul>
+<h2>Módulo re</h2>
+<p>Para utilizar Expresiones Regulares, Python provee el módulo <strong>re</strong>. Importando este módulo podemos <strong>crear objetos de tipo patrón y generar objetos tipo <em>matcher</em></strong>, que son los que contienen la información de la coincidencia del patrón en la cadena.</p>
+<h3>Creando un patrón</h3>
+<p>Para crear un objeto patrón, debemos importar el módulo <em>re</em> y utilizamos la función <strong>compile</strong>:</p>
+<pre class="brush: python; title: ; notranslate" title="">import os
+patron = re.compile('a[3-5]+') # coincide con una letra, seguida de al menos 1 dígito entre 3 y 5
+</pre>
+<p>Desde este momento, podemos usar el objeto <var>patron</var> para comparar cadenas con la expresión regular.</p>
+<h3>Buscar el patrón en la cadena</h3>
+<p>Para buscar un patrón en una cadena, Python provee los métodos <a href="http://docs.python.org/library/re.html#re.RegexObject.search">search</a> y <a href="http://docs.python.org/library/re.html#re.RegexObject.match">match</a>. La diferencia entre ambos es que, mientras <strong>search</strong> busca en la cadena alguna ocurrencia del patrón, <strong>match</strong> devuelve <strong>None</strong>si la ocurrencia no se da al principio de la cadena:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; cadena = 'a44453'
+&gt;&gt;&gt; patron.match(cadena)
+&lt;_sre.SRE_Match object at 0x02303BF0&gt;
+&gt;&gt;&gt; patron.search(cadena)
+&lt;_sre.SRE_Match object at 0x02303C28&gt;
+
+&gt;&gt;&gt; cadena = 'ba3455' # la coincidencia no está al principio!
+&gt;&gt;&gt; patron.search(cadena)
+&lt;_sre.SRE_Match object at 0x02303BF0&gt;
+&gt;&gt;&gt; print patron.match(cadena)
+None
+</pre>
+<p>Si sabemos que <strong>obtendremos más de una coincidencia</strong>, podemos usar el método <a href="http://docs.python.org/library/re.html#re.RegexObject.findall">findall</a>, que recorre la cadena y devuelve una lista de coincidencias:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron.findall('a455 a333b435')
+['a455', 'a333']
+</pre>
+<p>O el método <a href="http://docs.python.org/library/re.html#re.RegexObject.finditer">finditer</a>, que <strong>devuelve un iterador</strong> que podemos usar en el bucle <strong>for</strong>:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; for m in patron.finditer('a455 a333b435'):  # cada m es un objeto tipo matcher
+...   print m.groups()
+...
+('a', '455')
+('a', '333')
+('b', '435')
+</pre>
+<h2>Objetos matcher</h2>
+<p>Ya hablamos del uso del los paréntesis en un patrón. Cuando se obtiene una coincidencia del patrón en una cadena, cada grupo delimitado por paréntesis captura el texto que haya coincidido con él. <strong>Estos grupos son accesibles</strong> a través de un objeto tipo <strong>matcher</strong> devuelto por <strong>search</strong> o <strong>match</strong>.</p>
+<p>Los grupos se numeran de izquierda a derecha según su orden de aparición en el patrón, y podemos usar este número para acceder al contenido del grupo con el método <a href="http://docs.python.org/library/re.html#re.MatchObject.group">group</a> del objeto <strong>matcher</strong>.</p>
+<p>De forma alternativa, podemos usar el método <a href="http://docs.python.org/library/re.html#re.MatchObject.groups">groups</a> que devuelve una lista de grupos:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron = re.compile('([ab])([3-5]+)')  # ahora la letra se capturará en el grupo 1, y los números en el 2
+&gt;&gt;&gt; matcher = patron.search('a455 a333b435')
+&gt;&gt;&gt; matcher.group(0)  # el grupo 0 es el trozo de cadena que coincidió con el patrón completo
+'a455'
+&gt;&gt;&gt; matcher.group(1)
+'a'
+&gt;&gt;&gt; matcher.group(2)
+'455'
+&gt;&gt;&gt; matcher.groups()  # groups() no incluye el grupo 0
+('a', '455')
+</pre>
+<p>Los objetos <em>matcher</em> <strong>guardan más información sobre la coincidencia</strong>. Por ejemplo, la posición de la cadena en la que se produjo. En este caso, al principio de la cadena:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; matcher.pos
+0
+</pre>
+<p>También permiten <strong>sustituir los grupos capturados en una cadena cualquiera</strong>, mediante el uso de referencias de la forma <code>\g&lt;x&gt;</code>, donde <em>x</em> es el número de grupo:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; print matcher.expand('La cadena que coincidió fue \g&lt;0&gt;, el grupo 1 es \g&lt;1&gt; y el grupo 2 es \g&lt;2&gt;')
+La cadena que coincidió fue a455, el grupo 1 es a y el grupo 2 es 455
+</pre>
+<p>Es importante mencionar que, si bien <strong>findall</strong> no devuelve objetos tipo <strong>matcher</strong>, sí proporciona los grupos de forma similar, como una lista de <strong>tuplas</strong>:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron.findall('a455 a333b435')
+[('a', '455'), ('a', '333'), ('b', '435')]
+</pre>
+<h3>Reemplazo de cadenas</h3>
+<p>Similar a la combinación <strong>search + expand</strong>, existe el método <a href="http://docs.python.org/library/re.html#re.RegexObject.sub">sub</a>;&nbsp;cuya función es encontrar todas las coincidencias de un patrón y sustituirlas por una cadena. Este <strong>recibe dos parámetros</strong>: el primero es la cadena con la que se sustituirá el patrón y el segundo es la cadena sobre la que queremos aplicar la sustitución.</p>
+<p>Y también se pueden utilizar referencias:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron.sub("X", 'a455 a333b435')  # sustituye todas las ocurrencias por X
+'X XX'
+&gt;&gt;&gt; patron.sub("LETRA(\g&lt;1&gt;), NUMERO(\g&lt;2&gt;)", 'a455 a333b435')  # El reemplazo depende de lo que se capture
+'LETRA(a), NUMERO(455) LETRA(a), NUMERO(333)LETRA(b), NUMERO(435)'
+</pre>
+<h3>Grupos con nombre</h3>
+<p>De la misma forma en la que podemos usar grupos numerados, también podemos usar<strong> grupos con nombre</strong>. Esto hace más cómodo el <strong>manejo de patrones complejos</strong>; ya que siempre es más natural manejar un nombre que un número.</p>
+<p>Además, si sólo usamos números de grupo, podemos tener errores si modificamos el patrón para agregar algún grupo. Es decir, si lo agregamos podríamos estar cambiando el índice de otro posterior.</p>
+<p>Los nombres de grupo se definen agregando <strong><code>?P&lt;nombre_de_grupo&gt;</code></strong> al paréntesis de apertura del grupo:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron = re.compile('(?P&lt;letra&gt;[ab])(?P&lt;numero&gt;[3-5]+)')  # defino dos grupos con nombre 'letra' y 'numero'
+&gt;&gt;&gt; matcher = patron.search('a455 a333b435')  # busco en la misma cadena de antes
+&gt;&gt;&gt; matcher.groups()    # groups y group(n) funcionan igual
+('a', '455')
+&gt;&gt;&gt; matcher.group(1)
+'a'
+&gt;&gt;&gt; matcher.group('letra')   # pero además ahora puedo acceder por nombre
+'a'
+&gt;&gt;&gt; matcher.group('numero')
+'455'
+&gt;&gt;&gt; matcher.expand('La letra es \g&lt;letra&gt;')  # las referencias se usan con el nombre en vez de con el número
+'La letra es a'
+</pre>
+<p>Otra ventaja de utilizar nombres de grupo es que podemos usar el método <a href="http://docs.python.org/library/re.html#re.MatchObject.groupdict">groupdict</a> para obtener un diccionario de pares<strong> nombre-contenido</strong> de cada grupo:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; matcher.groupdict()
+{'letra': 'a', 'numero': '455'}
+</pre>
+<h3>Modificadores para el patrón</h3>
+<p>Existen varios modificadores que podemos pasar al método <a href="http://docs.python.org/library/re.html#re.compile">compile</a> para <strong>modificar el comportamiento del patrón</strong>. Los más usados son:</p>
+<ul>
+<li><strong><code>re.I</code> o <code>re.IGNORECASE</code>:</strong> hace que el patrón no distinga entre minúsculas y mayúsculas.</li>
+<li><strong><code>re.M</code> o <code>re.MULTILINE</code></strong>: modifica el comportamiento de <code>^</code> y <code>$</code> para que coincidan con el comienzo y final de cada línea de la cadena, en lugar&nbsp;de coincidir con el comienzo y final de la cadena entera</li>
+<li><strong><code>re.S</code> o <code>re.DOTALL</code></strong>: hace que el punto (.) coincida además con un salto de línea. Sin este modificador, el punto coincide con cualquier caracter excepto un salto de línea</li>
+</ul>
+<p>Cada modificador se usa como segundo parámetro de la función. Podemos unir los efectos de más de un modificador separándolos con <code>|</code>. Por ejemplo:</p>
+<pre class="brush: python; title: ; notranslate" title="">&gt;&gt;&gt; patron = re.compile('el patron', re.I | re.MULTILINE)
+</pre>
+<p>Estos son sólo algunos ejemplos del uso de expresiones regulares. Si te interesa conocer la lista completa, puedes encontrarla en el <a href="http://docs.python.org/library/re.html#module-contents" target="_blank">sitio de Python</a>. En la siguiente entrega de este artículo&nbsp;trabajaremos con <strong>Diccionarios, funciones y archivos</strong> en Python.</p>
+<p>Aunque si quieres conocer las <strong>mejores técnicas de desarrollo de aplicaciones web</strong> con Python, Django, Node.js y otras tecnologías, regístrate al <a href="https://platzi.com/cursos/backend-online/" target="_blank">Curso de Backend</a> en Platzi. Ahí lo aprenderás todo de aplicaciones en tiempo real, administración, APIs REST y despliegue en servidores.</p>
+				 	
+									 	
+				 </section>
+				 
+				
+				 
+			    <div class="email-bottom">
+	
+	<h4>Te contamos todo lo que pasa en Platzi, directamente en tu bandeja de entrada</h4>
+	
+	<form id="subscribe-bottom" name="emailBottom" method="post" action="https://platzi.com/blog/wp-content/themes/platzi-blog/newsletter.php" novalidate="novalidate">
+		<input class="texto" id="nombre" type="text" name="name" placeholder="Nombre" required="" aria-required="true">
+		<input class="texto" id="email" type="email" name="email" placeholder="Correo electrónico" required="" aria-required="true">
+		<input id="send-subscribe" class="enviar" type="submit" name="send" value="Registrarme">
+		<input type="hidden" name="origin" value="blog">
+		<input type="hidden" value="es" name="default_lang">
+	</form>
+
+</div>
+				 
+			    <div class="social-bottom">	
+	
+	<div class="fb-share-button" data-href="https://platzi.com/blog/expresiones-regulares-python/" data-layout="box_count"></div>
+	
+	<iframe id="twitter-widget-2" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Guía de expresiones regulares en Python_files/tweet_button.3beb63f1e7d4b547a42d79c021627bc3.es(2).html" style="position: static; visibility: visible; width: 67px; height: 61px;"></iframe>
+	<script type="text/javascript">
+	window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
+	</script>	
+	
+	<script src="./Guía de expresiones regulares en Python_files/platform.js" async="" defer="" gapi_processed="true">
+		{lang: 'es'}
+	</script>
+	<div id="___plusone_2" style="position: absolute; width: 450px; left: -10000px;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position:absolute;top:-10000px;width:450px;margin:0px;border-style:none" tabindex="0" vspace="0" width="100%" id="I2_1447125568375" name="I2_1447125568375" src="about:blank" data-gapiattached="true"></iframe></div><div class="g-plusone" data-size="tall" data-gapiscan="true" data-onload="true" data-gapistub="true"></div>
+	
+	<script src="./Guía de expresiones regulares en Python_files/in.js" type="text/javascript">
+	  lang: es_ES
+	</script>
+	<script type="IN/Share" data-counter="top"></script>
+
+</div>			    
+				<div class="author-extend" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+	<figure class="author-picture-container"><img src="./Guía de expresiones regulares en Python_files/Alvaro Martinez-68.jpg" class="avatar photo" alt="Alvaro Martinez" width="100" height="100"></figure>
+	<div class="author-data">
+		<strong temprop="name" name="author-name">Alvaro Martinez</strong>
+			</div>
+ </div>			     
+		    </div>
+		    
+		    		     <section class="comments">
+				<div class="wrap">
+
+										
+					<div class="fb-comments" data-href="https://platzi.com/blog/expresiones-regulares-python/" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+
+				</div>
+			</section>		    
+					</article>
+	   
+	</main><iframe style="display: none;"></iframe>
+
+	<script type="text/javascript" src="./Guía de expresiones regulares en Python_files/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="./Guía de expresiones regulares en Python_files/platzi-behaviors.js"></script>
+    
+	<!-- Google Tag Manager -->
+	<noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-KSZ9RW"
+	height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-KSZ9RW');</script>
+	<!-- End Google Tag Manager -->
+	<script type="text/javascript" src="./Guía de expresiones regulares en Python_files/shCore.js"></script>
+<script type="text/javascript" src="./Guía de expresiones regulares en Python_files/shBrushPython.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://platzi.com/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://platzi.com/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+	<!-- W3TC-include-js-head -->
+
+<iframe name="oauth2relay722543138" id="oauth2relay722543138" src="https://accounts.google.com/o/oauth2/postmessageRelay?parent=https%3A%2F%2Fplatzi.com#rpctoken=499473652&forcesecure=1" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe></body></html>

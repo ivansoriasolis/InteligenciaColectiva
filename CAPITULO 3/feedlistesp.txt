@@ -1,5 +1,4 @@
 http://danielmarin.naukas.com/feed/
-http://oceanoestelar.blogspot.com/feeds/posts/default
 http://feeds.feedburner.com/imagen-astronomica
 http://astrofisicayfisica.blogspot.com/feeds/posts/default
 http://circuloesceptico.com.ar/feed/
@@ -12,7 +11,6 @@ http://historiasdelahistoria.com/feed/
 http://tecnologia7.net/feed/
 http://alt1040.com/feed/
 http://www.hispasec.com/rss/unaaldia.xml
-http://bitelia.com/feed/
 http://www.pcworldenespanol.com/feed/
 http://www.genbetadev.com/index.xml
 http://cholonymous.blogspot.com/feeds/posts/default
@@ -21,7 +19,6 @@ http://cnho.wordpress.com/feed/
 http://feeds.feedburner.com/LaCienciaParaTodos
 http://www.alpoma.net/tecob/?feed=rss2
 http://feeds.feedburner.com/fayerwayer
-http://copepodo.wordpress.com/feed/
 http://amazings.es/feed/
 http://feeds.feedburner.com/espaciociencia
 http://www.genciencia.com/atom.xml

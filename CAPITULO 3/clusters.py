@@ -6,23 +6,26 @@ import codecs
 charset = "utf-8"
 
 def readfile(filename):
-  f=codecs.open(filename,encoding="ascii", errors="ignore")
+  f=codecs.open(filename,encoding="utf-8", errors="ignore")
   lines=[line for line in f]
   
-  # First line is the column titles
+  # La primera linea son los títulos de columna
   colnames=lines[0].strip().split('\t')[1:]
   rownames=[]
   data=[]
   for line in lines[1:]:
     p=line.strip().split('\t')
-    # First column in each row is the rowname
+    # La primera columna en cada fila es el nombre de la fila
     rownames.append(p[0])
-    # The data for this row is the remainder of the row
+    # Los datos para esta fila es lo que queda de la fila
     data.append([float(x) for x in p[1:]])
   return rownames,colnames,data
 
 
 from math import sqrt
+
+def euclidean(v1,v2):
+  return sqrt(sum([(v1[i]-v2[i])**2 for i in range(len(v1))]))
 
 def pearson(v1,v2):
   # Sumas simples
@@ -57,14 +60,14 @@ def hcluster(rows,distance=pearson):
   distances={}
   currentclustid=-1
 
-  # Clusters are initially just the rows
+  # Los clusters son inicialmente las filas
   clust=[bicluster(rows[i],id=i) for i in range(len(rows))]
 
   while len(clust)>1:
     lowestpair=(0,1)
     closest=distance(clust[0].vec,clust[1].vec)
 
-    # loop through every pair looking for the smallest distance
+    # Iterando atraves de cada par viendo la distancia mas pequeña 
     for i in range(len(clust)):
       for j in range(i+1,len(clust)):
         # distances is the cache of distance calculations
@@ -72,10 +75,11 @@ def hcluster(rows,distance=pearson):
           distances[(clust[i].id,clust[j].id)]=distance(clust[i].vec,clust[j].vec)
 
         d=distances[(clust[i].id,clust[j].id)]
-
+        #print(clust[i].id,clust[j].id,d)
         if d<closest:
           closest=d
           lowestpair=(i,j)
+          
 
     # calculate the average of the two clusters
     mergevec=[
@@ -96,17 +100,17 @@ def hcluster(rows,distance=pearson):
   return clust[0]
 
 def printclust(clust,labels=None,n=0):
-  # indent to make a hierarchy layout
+  # Identar para hacer un esquema jerarquico
   for i in range(n): print ' ',
   if clust.id<0:
-    # negative id means that this is branch
-    print '-', clust.distance
+    # un ID negativo significa que esta es una rama 
+    print '-'#, clust.distance
   else:
-    # positive id means that this is an endpoint
+    # un ID positivo significa que es un punto final
     if labels==None: print clust.id
-    else: print labels[clust.id], clust.distance
+    else: print labels[clust.id] #, clust.distance
 
-  # now print the right and left branches
+  # Ahora imprimimos las ramas derecha e izquierda
   if clust.left!=None: printclust(clust.left,labels=labels,n=n+1)
   if clust.right!=None: printclust(clust.right,labels=labels,n=n+1)
 

@@ -128,6 +128,36 @@ class crawler:
         self.dbcommit( )
       pages=newpages
 
+  def calculatepagerank(self,iterations=20):
+    # limpiamos las tablas pagerank actuales
+    self.con.execute(
+	 'drop table if exists pagerank')
+    self.con.execute(
+	 'create table pagerank(urlid primary key,score)')
+    # Inicializar cada pagerank de 1
+    self.con.execute(
+	 'insert into pagerank select rowid, 1.0 from urllist')
+    self.dbcommit( )
+    for i in range(iterations):
+      print "Iteration %d" % (i)
+      for (urlid,) in self.con.execute('select rowid from urllist'):
+        pr=0.15
+        # Iterando en todas las paginas que enlazan a esta
+        for (linker,) in self.con.execute(
+        'select distinct fromid from link where toid=%d' % urlid):
+          # Obtiene el PageRank del enlazador
+          linkingpr=self.con.execute(
+          'select score from pagerank where urlid=%d'
+		  % linker).fetchone( )[0]
+          # Obtenermos el numero total de enlaces desde el enlazador
+          linkingcount=self.con.execute(
+          'select count(*) from link where fromid=%d'
+		  % linker).fetchone( )[0]
+          pr+=0.85*(linkingpr/linkingcount)
+        self.con.execute(
+        'update pagerank set score=%f where urlid=%d' % (pr,urlid))
+      self.dbcommit( )
+
 class searcher:
   def __init__(self, dbname):
     self.con = sqlite.connect(dbname)
@@ -216,5 +246,21 @@ class searcher:
       loc=sum(row[1:])
       if loc<locations[row[0]]: locations[row[0]]=loc
     return self.normalizescores(locations,smallIsBetter=1)
+	
+  def inboundlinkscore(self,rows):
+    uniqueurls=set([row[0] for row in rows])
+    inboundcount=dict([(u,self.con.execute( \
+      'select count(*) from link where toid=%d' % u).fetchone( )[0]) \
+        for u in uniqueurls])
+    return self.normalizescores(inboundcount)
+	
+  def pagerankscore(self,rows):
+    pageranks=dict([(row[0],self.con.execute(
+	'select score from pagerank where urlid=%d' 
+	% row[0]).fetchone( )[0]) for row in rows])
+    maxrank=max(pageranks.values( ))
+    normalizedscores=dict([(u,float(l)/maxrank) 
+	for (u,l) in pageranks.items( )])
+    return normalizedscores
 	
 	

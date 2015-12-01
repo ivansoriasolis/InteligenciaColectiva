@@ -115,38 +115,35 @@ def printclust(clust,labels=None,n=0):
   if clust.right!=None: printclust(clust.right,labels=labels,n=n+1)
 
 def getheight(clust):
-  # Is this an endpoint? Then the height is just 1
+  # si es un punto final el peso es 1
   if clust.left==None and clust.right==None: return 1
-
-  # Otherwise the height is the same of the heights of
-  # each branch
+  # de otra manera el peso es el mismo que los pesos de cada rama
   return getheight(clust.left)+getheight(clust.right)
 
 def getdepth(clust):
-  # The distance of an endpoint is 0.0
+  # La distancia de un punto final es 0.0
   if clust.left==None and clust.right==None: return 0
-
-  # The distance of a branch is the greater of its two sides
-  # plus its own distance
+  # La distancia de una rama es el mas grande de sus dos lados 
+  # mas su propia distancia
   return max(getdepth(clust.left),getdepth(clust.right))+clust.distance
 
 
 def drawdendrogram(clust,labels,jpeg='clusters.jpg'):
-  # height and width
+  # alto y ancho
   h=getheight(clust)*20
   w=1200
   depth=getdepth(clust)
 
-  # width is fixed, so scale distances accordingly
+  # el ancho es fijado para escalar las distancias de acuerdo
   scaling=float(w-150)/depth
 
-  # Create a new image with a white background
+  # Crea una nueva imagen con un fondo blanco
   img=Image.new('RGB',(w,h),(255,255,255))
   draw=ImageDraw.Draw(img)
 
   draw.line((0,h/2,10,h/2),fill=(255,0,0))    
 
-  # Draw the first node
+  # Dibujando del primer nodo 
   drawnode(draw,clust,10,(h/2),scaling,labels)
   img.save(jpeg,'JPEG')
 
@@ -156,22 +153,22 @@ def drawnode(draw,clust,x,y,scaling,labels):
     h2=getheight(clust.right)*20
     top=y-(h1+h2)/2
     bottom=y+(h1+h2)/2
-    # Line length
+    # Longitud de la linea
     ll=clust.distance*scaling
-    # Vertical line from this cluster to children    
+    # Linea vertical de este clustes  a un hijo    
     draw.line((x,top+h1/2,x,bottom-h2/2),fill=(255,0,0))    
     
-    # Horizontal line to left item
+    # Linea horizontal al item de la derecha
     draw.line((x,top+h1/2,x+ll,top+h1/2),fill=(255,0,0))    
 
-    # Horizontal line to right item
+    # Linea horizontal al item de la derecha
     draw.line((x,bottom-h2/2,x+ll,bottom-h2/2),fill=(255,0,0))        
 
-    # Call the function to draw the left and right nodes    
+    # Llamada a la funcion para dibujar los nodos derecho e izquierdo    
     drawnode(draw,clust.left,x+ll,top+h1/2,scaling,labels)
     drawnode(draw,clust.right,x+ll,bottom-h2/2,scaling,labels)
   else:   
-    # If this is an endpoint, draw the item label
+    # Si este es un punto final, dibuje la etiqueta del item
     draw.text((x+5,y-7),labels[clust.id],(0,0,0))
 
 def rotatematrix(data):
@@ -184,20 +181,20 @@ def rotatematrix(data):
 import random
 
 def kcluster(rows,distance=pearson,k=4):
-  # Determine the minimum and maximum values for each point
+  # Determinando el minimo y maximo valor para cada punto
   ranges=[(min([row[i] for row in rows]),max([row[i] for row in rows])) 
   for i in range(len(rows[0]))]
 
-  # Create k randomly placed centroids
+  #Creando k centroides ubicados aleatoriamente 
   clusters=[[random.random()*(ranges[i][1]-ranges[i][0])+ranges[i][0] 
   for i in range(len(rows[0]))] for j in range(k)]
   
   lastmatches=None
   for t in range(100):
-    print 'Iteration %d' % t
+    print 'Iteracion %d' % t
     bestmatches=[[] for i in range(k)]
     
-    # Find which centroid is the closest for each row
+    # Encontrando que centroide es mas cercano a cada fila
     for j in range(len(rows)):
       row=rows[j]
       bestmatch=0
@@ -206,11 +203,11 @@ def kcluster(rows,distance=pearson,k=4):
         if d<distance(clusters[bestmatch],row): bestmatch=i
       bestmatches[bestmatch].append(j)
 
-    # If the results are the same as last time, this is complete
+    # Si los resultados son los mismos a los de la ultima vez se termina
     if bestmatches==lastmatches: break
     lastmatches=bestmatches
     
-    # Move the centroids to the average of their members
+    # Moviendo los centroides al promedio de sus miembros
     for i in range(k):
       avgs=[0.0]*len(rows[0])
       if len(bestmatches[i])>0:
@@ -236,46 +233,43 @@ def tanamoto(v1,v2):
 def scaledown(data,distance=pearson,rate=0.01):
   n=len(data)
 
-  # The real distances between every pair of items
+  # La distancia real entre cada par de items
   realdist=[[distance(data[i],data[j]) for j in range(n)] 
              for i in range(0,n)]
 
-  # Randomly initialize the starting points of the locations in 2D
+  # Se inicializan aleatoriamente los puntos de inicio de las ubicaciones en 2d
   loc=[[random.random(),random.random()] for i in range(n)]
   fakedist=[[0.0 for j in range(n)] for i in range(n)]
   
   lasterror=None
   for m in range(0,1000):
-    # Find projected distances
+    # Encontrando distancias proyectadas
     for i in range(n):
       for j in range(n):
         fakedist[i][j]=sqrt(sum([pow(loc[i][x]-loc[j][x],2) 
                                  for x in range(len(loc[i]))]))
   
-    # Move points
+    # Mover puntos
     grad=[[0.0,0.0] for i in range(n)]
     
     totalerror=0
     for k in range(n):
       for j in range(n):
         if j==k: continue
-        # The error is percent difference between the distances
+        # El error es la diferencia porcentual entre las distancias
         errorterm=(fakedist[j][k]-realdist[j][k])/realdist[j][k]
         
-        # Each point needs to be moved away from or towards the other
-        # point in proportion to how much error it has
+        # Cada punto necesita ser movido lejos del otro
         grad[k][0]+=((loc[k][0]-loc[j][0])/fakedist[j][k])*errorterm
         grad[k][1]+=((loc[k][1]-loc[j][1])/fakedist[j][k])*errorterm
 
-        # Keep track of the total error
+        # Manenter el seguimiento del error total
         totalerror+=abs(errorterm)
     print totalerror
 
-    # If the answer got worse by moving the points, we are done
     if lasterror and lasterror<totalerror: break
     lasterror=totalerror
     
-    # Move each of the points by the learning rate times the gradient
     for k in range(n):
       loc[k][0]-=rate*grad[k][0]
       loc[k][1]-=rate*grad[k][1]

@@ -263,4 +263,20 @@ class searcher:
 	for (u,l) in pageranks.items( )])
     return normalizedscores
 	
+  def linktextscore(self,rows,wordids):
+    linkscores=dict([(row[0],0) for row in rows])
+    for wordid in wordids:
+      cur=self.con.execute(
+	  'select link.fromid,link.toid from linkwords,link \
+	  where wordid=%d and linkwords.linkid=link.rowid' % wordid)
+      for (fromid,toid) in cur:
+        if toid in linkscores:
+          pr=self.con.execute(
+		  'select score from pagerank where urlid=%d'
+		  % fromid).fetchone( )[0]
+          linkscores[toid]+=pr
+    maxscore=max(linkscores.values( ))
+    normalizedscores=dict([(u,float(l)/maxscore) 
+	for (u,l) in linkscores.items( )])
+    return normalizedscores
 	
